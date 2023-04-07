@@ -8,34 +8,43 @@
 import SwiftUI
 
 struct Images: View {
+    
+    @StateObject var imageDownloaderClient : ImageDownloaderClient = ImageDownloaderClient()
     var url : String
-    
-    @ObservedObject var imageDownloaderClient = ImageDownloaderClient()
-    
-    init(url : String) {
+    var size : CGSize
+
+    init(url: String, size: CGSize) {
+
         self.url = url
-        self.imageDownloaderClient.downloadingImage(url: self.url)
-        print(url)
-    }
-    
-    var body: some View {
+        self.size = size
+       
         
-        if let data = self.imageDownloaderClient.downloadedImage {
-            Image(uiImage: UIImage(data: data)!)
-                .resizable()
-                .cornerRadius(10)
-                .padding(5)
-        } else {
-            Image("placeholder")
-                .resizable()
-                .cornerRadius(10)
-                .padding(5)
+    }
+   
+    var body: some View {
+        VStack(spacing: 0) {
+            if let image = self.imageDownloaderClient.downloadedImage {
+                Image(uiImage: image)
+                    .resizable()
+                    .aspectRatio(contentMode: .fill)
+                    .frame(width: size.width, height: size.height)
+                    .cornerRadius(25)
+            }else {
+                Image("placeholder")
+            }
+        }.onAppear {
+            DispatchQueue.main.async {
+                imageDownloaderClient.downloadingImage(url: url)
+            }
         }
     }
+    
+    
 }
 
 struct Images_Previews: PreviewProvider {
     static var previews: some View {
-        Images(url: "https://cdn2.thecatapi.com/images/0XYvRd7oD.jpg")
+        Images(url: "https://cdn2.thecatapi.com/images/0XYvRd7oD.jpg", size: CGSize(width: 200, height: 200))
     }
 }
+

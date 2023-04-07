@@ -9,35 +9,25 @@ import SwiftUI
 
 struct MainView: View {
     
-    @ObservedObject var catsListViewModel : CatsListViewModel
+    @EnvironmentObject var viewModel : CatsListViewModel
     
-    init(catsListViewModel : CatsListViewModel) {
-        self.catsListViewModel = catsListViewModel
-    }
     
     var body: some View {
-        if catsListViewModel.cats.count == 0 {
+        if viewModel.cats.count == 0 {
             PlaceHolder()
                 .onAppear {
-                    self.catsListViewModel.basicDownloader()
-                    self.catsListViewModel.favoriteCats()
+                    self.viewModel.basicDownloader()
+                    self.viewModel.favoriteCats()
                 }
         } else {
-            SearchCats(catsListViewModel: catsListViewModel)
+            Home()
+                .environmentObject(viewModel)
         }
     }
 }
 
 struct MainView_Previews: PreviewProvider {
     static var previews: some View {
-        Test_MainView()
-    }
-    
-    struct Test_MainView : View {
-        @ObservedObject var catsListViewModel = CatsListViewModel()
-        
-        var body: some View {
-            MainView(catsListViewModel: catsListViewModel)
-        }
+        ContentView()
     }
 }

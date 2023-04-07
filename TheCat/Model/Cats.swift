@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Cats : Codable, Identifiable {
+struct Cats :DataModel, Codable, Identifiable {
     
     let id : String?
     let image : CatsImages?
@@ -33,7 +33,7 @@ struct Cats : Codable, Identifiable {
     }
 }
 
-struct CatsImages : Codable {
+struct CatsImages :Codable {
     let id : String?
     let url : String?
     
@@ -43,7 +43,7 @@ struct CatsImages : Codable {
     }
 }
 
-struct CatsFavorite : Codable {
+struct CatsFavorite :DataModel, Identifiable, Codable {
     let id : Int
     let image : CatsImages?
     
@@ -52,3 +52,5 @@ struct CatsFavorite : Codable {
         case image = "image"
     }
 }
+
+protocol DataModel {}

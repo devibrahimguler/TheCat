@@ -9,27 +9,23 @@ import SwiftUI
 
 struct FavouriteView: View {
     
-    @ObservedObject var catsListViewModel : CatsListViewModel
-    
-    init(catsListViewModel : CatsListViewModel) {
-        self.catsListViewModel = catsListViewModel
-    }
+    @EnvironmentObject var viewModel : CatsListViewModel
+
     var body: some View {
         ScrollView(.vertical, showsIndicators: false, content: {
             VStack {
-                ForEach(self.catsListViewModel.cats, id:\.id ){ cat in
-                    if self.catsListViewModel.getFavori(cat: cat) {
-                            Divider()
-                                .padding(.leading,30)
+                ForEach(self.viewModel.cats){ cat in
+                    if self.viewModel.getFavori(cat: cat) {
+                     
+                     
                             
                             HStack {
                                 NavigationLink {
-                                    CatDetailView(cat: cat, catsListViewModel: catsListViewModel)
+                                    CatDetailView(cat: cat)
+                                        .environmentObject(viewModel)
                                 } label: {
                                     HStack {
-                                        Images(url: cat.image)
-                                            .frame(width: 80, height: 80)
-                                        
+                                       
                                         
                                         Text(cat.name)
                                             .frame(width: UIScreen.main.bounds.width * 0.3)
@@ -39,9 +35,9 @@ struct FavouriteView: View {
                                 
                                 
                                 Button {
-                                    self.catsListViewModel.deleteCats(imageId: self.catsListViewModel.getFavId(cat: cat))
+                                    self.viewModel.deleteCats(imageId: self.viewModel.getFavId(cat: cat))
                                     Thread.sleep(forTimeInterval: 0.1)
-                                    self.catsListViewModel.favoriteCats()
+                                    self.viewModel.favoriteCats()
                                 } label: {
                                     Image("heart-1")
                                         .resizable()
@@ -64,14 +60,6 @@ struct FavouriteView: View {
 
 struct FavouriteView_Previews: PreviewProvider {
     static var previews: some View {
-        Test_FavouriteView()
-    }
-    
-    struct Test_FavouriteView : View {
-        var catsListViewModel = CatsListViewModel()
-        
-        var body: some View {
-            FavouriteView(catsListViewModel: catsListViewModel)
-        }
+        ContentView()
     }
 }

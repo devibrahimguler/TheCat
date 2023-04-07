@@ -8,117 +8,54 @@
 import SwiftUI
 
 struct SearchCats: View {
-    @ObservedObject var catsListViewModel : CatsListViewModel
-    
+    @EnvironmentObject var viewModel : CatsListViewModel
+    @Namespace private var animation
     @State var searchingName = ""
     
-    init(catsListViewModel : CatsListViewModel) {
-        self.catsListViewModel = catsListViewModel
-    }
-    
     var body: some View {
-        NavigationView {
-            ScrollView(.vertical, showsIndicators: false) {
-                VStack {
-                    HStack {
-                        TextField("Arama", text: self.$searchingName, onEditingChanged: { _ in}, onCommit: {
-                            if self.searchingName != "" {
-                                self.catsListViewModel.searchCats(name: self.searchingName)
-                            } else {
-                                self.catsListViewModel.getCats()
-                            }
-                        }).padding(.horizontal, 10)
-                            .textFieldStyle(RoundedBorderTextFieldStyle())
-                        
-                        Image("search")
-                            .resizable()
-                            .frame(width: 20, height: 20)
-                            .aspectRatio(contentMode: .fit)
-                            .padding(.trailing, 25)
+        VStack(spacing: 15) {
+            HStack {
+                TextField("Arama", text: self.$searchingName, onEditingChanged: { _ in}, onCommit: {
+                    if self.searchingName != "" {
+                        self.viewModel.searchCats(name: self.searchingName)
+                    } else {
+                        self.viewModel.getCats()
                     }
-                    
-                    
-                    ForEach(self.catsListViewModel.cats, id: \.id) { cat in
-                        Divider()
-                            .padding(.leading,30)
-                        
-                        HStack{
-                            NavigationLink {
-                                CatDetailView(cat: cat, catsListViewModel: catsListViewModel)
-                            } label: {
-                                HStack {
-                                    
-                                    Images(url: cat.image)
-                                        .frame(width: 80, height: 80)
-                                    
-                                    Text(cat.name)
-                                        .frame(width: UIScreen.main.bounds.width * 0.3)
-                                    
-                                }
-                            }.frame(width: UIScreen.main.bounds.width * 0.7)
-                            
-                            Button {
-                                if !self.catsListViewModel.getFavori(cat: cat) {
-                                    
-                                    self.catsListViewModel.uploadCats(parameters: "{\n\t\"image_id\":\"\(cat.imageId)\",\n\t\"sub_id\": \"gxibrahimxr\"\n}")
-                                    Thread.sleep(forTimeInterval: 0.1)
-                                    self.catsListViewModel.favoriteCats()
-                                    
-                                } else {
-                                    
-                                    self.catsListViewModel.deleteCats(imageId: self.catsListViewModel.getFavId(cat: cat))
-                                    Thread.sleep(forTimeInterval: 0.1)
-                                    self.catsListViewModel.favoriteCats()
-                                    
-                                }
-                                
-                            } label: {
-                                
-                                Image(self.catsListViewModel.getFavori(cat: cat) ? "heart-1" : "heart")
-                                    .resizable()
-                                    .frame(width: 30, height: 30)
-                            }.frame(width: UIScreen.main.bounds.width * 0.2)
-                        }
-                        
-                        Divider()
-                            .padding(.leading,30)
-                    }.frame(width: UIScreen.main.bounds.width)
-                    
-                }.navigationTitle("CatBreeds")
-                    .navigationBarTitleDisplayMode(.inline)
-                    .toolbar {
-                        NavigationLink {
-                            FavouriteView(catsListViewModel: catsListViewModel)
-                        } label: {
-                            HStack {
-                                Image("heart-1")
-                                    .resizable()
-                                    .frame(width: 25, height: 25)
-                                
-                                
-                            }
-                        }
-                        
-                    }
+                }).padding(.horizontal, 10)
+                    .textFieldStyle(RoundedBorderTextFieldStyle())
+                
+                Image("search")
+                    .resizable()
+                    .frame(width: 20, height: 20)
+                    .aspectRatio(contentMode: .fit)
+                    .padding(.trailing, 25)
             }
+            
+            GeometryReader {
+                let size = $0.size
+                ScrollView(.vertical, showsIndicators: false) {
+                
+
+                    ListView(cats: viewModel.cats, animation: animation, size: size)
+                        .environmentObject(viewModel)
+                }
+                .coordinateSpace(name: "SCROLLVIEW")
+                
+            }
+            .padding(.top, 15)
+
         }
-        .animation(.easeInOut)
+        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
         .onAppear {
-            self.catsListViewModel.basicDownloader()
-            self.catsListViewModel.favoriteCats()
+            self.viewModel.basicDownloader()
+            self.viewModel.favoriteCats()
         }
     }
 }
 
 struct SearchCats_Previews: PreviewProvider {
     static var previews: some View {
-        Test_SearchCats()
-    }
-    
-    struct Test_SearchCats : View {
-        var body: some View {
-            SearchCats(catsListViewModel: CatsListViewModel())
-        }
+        ContentView()
     }
     
 }

@@ -6,62 +6,85 @@
 //
 
 import Foundation
-import SwiftUI
+import UIKit
 
 class CatsListViewModel : ObservableObject {
     
-    @Published var cats : [CatsViewModel] = [CatsViewModel]()
-    @Published var seaCats : [CatsViewModel] = [CatsViewModel]()
-    @Published var favCatImgId : [FavoriViewModel] = [FavoriViewModel]()
+    @Published var cats : [Cats] = [Cats]()
+    @Published var seaCats : [Cats] = [Cats]()
+    @Published var favCatImgId : [Cats] = [Cats]()
+    
+    @Published var showDetailView: Bool = false
+    @Published var animateCurrentCat: Bool = false
+    @Published var animateContent: Bool = false
+    @Published var offsetAnimation: Bool = false
+    
+    @Published var selectedCat: Cats?
     
     let downloaderClient = DownloaderClient()
+
+
+    
     
     func getCats() {
-        downloaderClient.downloadsCats() { result in
-            switch result {
-            case .failure(let error):
-                print(error)
-            case .success(let catsArray):
-                if let catsArray = catsArray {
-                    DispatchQueue.main.async {
-                        self.cats = catsArray.map(CatsViewModel.init)
-                    }
-                }
-            }
+        DispatchQueue.main.async {
+            self.cats = ReadData().cats
         }
+
+        /*
+         let url = "https://api.thecatapi.com/v1/breeds"
+         downloaderClient.downloadsCats(ofType: Cats.self, url: url) { result in
+             switch result {
+             case .failure(let error):
+                 print(error)
+             case .success(let catsArray):
+                 if let catsArray = catsArray {
+                     DispatchQueue.main.async {
+                         self.cats = catsArray.map(CatsViewModel.init)
+                     }
+                 }
+             }
+         }
+         */
+        
     }
     
     func favoriteCats() {
-        downloaderClient.downloadsFavorite { result in
-            switch result {
-            case .failure(let error):
-                print(error)
-            case .success(let imagesArray):
-                if let imagesArray = imagesArray {
-                    DispatchQueue.main.async {
-                        self.favCatImgId = imagesArray.map(FavoriViewModel.init)
-                    }
-                }
-            }
-        }
+        
+        /*
+         let url = "https://api.thecatapi.com/v1/favourites?sub_id=gxibrahimxr"
+         downloaderClient.downloadsCats(ofType: CatsFavorite.self, url: url) { result in
+             switch result {
+             case .failure(let error):
+                 print(error)
+             case .success(let imagesArray):
+                 if let imagesArray = imagesArray {
+                     DispatchQueue.main.async {
+                         self.favCatImgId = imagesArray.map(FavoriViewModel.init)
+                     }
+                 }
+             }
+         }
+         */
+        
     }
     
-    func getFavori(cat : CatsViewModel) -> Bool {
+    func getFavori(cat : Cats) -> Bool {
         for fav in self.favCatImgId {
-            if cat.imageId == fav.imageId {
+            if cat.image?.id == fav.image?.id {
                 return true
             }
         }
         return false
     }
     
-    func getFavId(cat : CatsViewModel) -> Int {
+    func getFavId(cat : Cats) -> String {
         for fav in self.favCatImgId {
-            if cat.imageId == fav.imageId {
-                return fav.id
+            if cat.image?.id == fav.image?.id {
+                return (fav.image?.id)!
             }
         }
-        return -1
+        return ""
     }
     
     func searchCats(name: String) {
@@ -69,7 +92,7 @@ class CatsListViewModel : ObservableObject {
         self.cats.removeAll()
         
         for cat in seaCats {
-            if (cat.name.starts(with: name))
+            if ((cat.name?.starts(with: name)) != nil)
             {
                 self.cats.append(cat)
             }
@@ -87,117 +110,5 @@ class CatsListViewModel : ObservableObject {
     func basicDownloader() {
         self.getCats()
         self.favoriteCats()
-    }
-}
-
-struct ImageViewModel {
-    
-    let img : CatsImages
-    
-    var id : String {
-        img.id ?? ""
-    }
-    
-    var url : String {
-        img.url ?? ""
-    }
-}
-
-struct FavoriViewModel {
-    
-    let fav : CatsFavorite
-    
-    var id : Int {
-        fav.id
-    }
-    
-    var imageId : String {
-        fav.image?.id ?? ""
-    }
-    
-    var url : String {
-        fav.image?.url ?? ""
-    }
-}
-
-struct CatsViewModel {
-    
-    let cats : Cats
-    
-    var id : String {
-        cats.id ?? ""
-    }
-    
-    var image : String {
-        cats.image?.url ?? ""
-    }
-    
-    var imageId : String {
-        cats.image?.id ?? ""
-    }
-    
-    var name : String {
-        cats.name ?? ""
-    }
-    
-    var description : String {
-        cats.description ?? ""
-    }
-    
-    var origin : String {
-        cats.origin ?? ""
-    }
-    
-    var wikipedia_url : String {
-        cats.wikipedia_url ?? ""
-    }
-    
-    var life_span : String {
-        cats.life_span ?? ""
-    }
-    
-    var dog_friendly : Int {
-        cats.dog_friendly ?? 0
-    }
-}
-
-struct SearchViewModel {
-    
-    let cats : Cats
-    
-    var id : String {
-        cats.id ?? ""
-    }
-    
-    var image : String {
-        cats.image?.url ?? ""
-    }
-    
-    var imageId : String {
-        cats.image?.id ?? ""
-    }
-    
-    var name : String {
-        cats.name ?? ""
-    }
-    
-    var description : String {
-        cats.description ?? ""
-    }
-    
-    var origin : String {
-        cats.origin ?? ""
-    }
-    
-    var wikipedia_url : String {
-        cats.wikipedia_url ?? ""
-    }
-    
-    var life_span : String {
-        cats.life_span ?? ""
-    }
-    
-    var dog_friendly : Int {
-        cats.dog_friendly ?? 0
     }
 }

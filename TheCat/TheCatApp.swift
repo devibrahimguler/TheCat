@@ -9,10 +9,9 @@ import SwiftUI
 
 @main
 struct TheCatApp: App {
-    @ObservedObject var catsListViewModel = CatsListViewModel()
     var body: some Scene {
         WindowGroup {
-            MainView(catsListViewModel: catsListViewModel)
+            ContentView()
         }
     }
 }
