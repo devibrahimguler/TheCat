@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct ListView: View {
-    @EnvironmentObject var viewModel : CatsListViewModel
+    @EnvironmentObject var viewModel : CatsViewModel
     var cats : [Cats]
     var animation: Namespace.ID
     var size: CGSize

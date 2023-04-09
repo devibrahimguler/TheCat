@@ -8,32 +8,18 @@
 import SwiftUI
 
 struct Home: View {
-    @EnvironmentObject var viewModel : CatsListViewModel
-
+    @EnvironmentObject var viewModel : CatsViewModel
+    @Namespace private var animation
     @State var currentIndex : Int = 0
+    
+    @GestureState var offset: CGFloat = 0
     
     var body: some View {
         ZStack {
             TabView(selection: $currentIndex) {
-                ForEach(viewModel.cats.indices, id: \.self) { index in
+                ForEach(viewModel.cats?.indices ?? [Cats]().indices, id: \.self) { index in
                     GeometryReader { proxy in
-                        Images(url: (viewModel.cats[index].image?.url)!, size: proxy.size)
-                         
-                            .frame(width: proxy.size.width, height: proxy.size.height)
-                            .cornerRadius(1)
-                        /*
-                         if let image = self.viewModel.downloadingImage(url: viewModel.cats[index].image) as? UIImage {
-                             Image(uiImage: image)
-                                 .resizable()
-                                 .aspectRatio(contentMode: .fill)
-                                 .frame(width: proxy.size.width, height: proxy.size.height)
-                                 .cornerRadius(1)
-                         } else {
-                             Image("placeholder")
-                         }
-                         */
-                        
-                        
+                        Images(url: viewModel.cats?[index].image?.url ?? "", size: proxy.size)
                     }
                     .ignoresSafeArea()
                     .offset(y: -100)
@@ -48,57 +34,177 @@ struct Home: View {
                     Color.white.opacity(0.4),
                     Color.white,
                     Color.white,
+                    Color.white,
         
                 ], startPoint: .top, endPoint: .bottom)
             }
             .ignoresSafeArea()
             
-            SnapCarousel(spacing: getRect().height < 750 ? 15 : 20,trailingSpace: getRect().height < 750 ? 100 : 130,index: $currentIndex, items: viewModel.cats) { cat in
+            SnapCarousel(spacing: getRect().height < 750 ? 15 : 20,trailingSpace: getRect().height < 750 ? 100 : 130,index: $currentIndex, items: viewModel.cats ?? []) { cat in
                 CardView(cat: cat)
             }
             .offset(y: getRect().height / 3.5)
+            
+            VStack {
+                Spacer()
+                HStack(spacing: 15) {
+                    
+                    ZStack {
+                        LikeBar()
+                    }
+                    .frame(width: getRect().width / 3)
+                        .padding(.leading, 5)
+                        .contentShape(Rectangle())
+                        .onTapGesture {
+                            withAnimation(.easeInOut) {
+                                
+                            }
+                        }
+                    
+                    ZStack {
+                        if viewModel.searchActivated {
+                            SearchBar()
+                              
+                        } else {
+                            SearchBar()
+                                .matchedGeometryEffect(id: "SEARCHBAR", in: animation)
+                        }
+                        
+                    }
+                    .frame(width: getRect().width / 3)
+                    .padding(.horizontal, 5)
+                    .contentShape(Rectangle())
+                    .onTapGesture {
+                        withAnimation(.easeInOut) {
+                            viewModel.searchActivated = true
+                            viewModel.selectedCat = nil
+                        }
+                    }
+                    
+                }
+                .padding(.vertical)
+                .frame(maxWidth: .infinity, alignment: .bottom)
+                .padding (.horizontal, 15)
+            }
+                
+            
+
+           
         }
+        .overlay(content: {
+            ZStack {
+                if viewModel.searchActivated {
+                    SearchView(animation: animation)
+                        .environmentObject(viewModel)
+                      
+                }
+                if viewModel.showDetailView {
+                    DetailView(cat: viewModel.selectedCat!, animation: animation)
+                        .environmentObject(viewModel)
+                      
+                }
+            }
+        })
         .onAppear {
             self.viewModel.basicDownloader()
             self.viewModel.favoriteCats()
         }
         
+        
     }
     
     @ViewBuilder
-    func CardView(cat: CatsViewModel) -> some View {
+    func CardView(cat: Cats) -> some View {
         VStack(spacing: 10) {
             GeometryReader {proxy in
-                Images(url: cat.image, size: proxy.size)
-    
-                
+                Images(url: cat.image?.url ?? "", size: proxy.size)
+                    .cornerRadius(25)
+                    .matchedGeometryEffect(id: cat.id, in: animation)
             }
             .padding(15)
             .background(Color.white)
             .cornerRadius(25)
             .frame(height: getRect().height / 2.5)
             .padding(.bottom, 15)
+         
             
-            Text(cat.name)
+            Text(cat.name!)
                 .font(.title2.bold())
                 .lineLimit(1)
             
             
-            Text(cat.description)
+            Text(cat.description!)
                 .font(getRect().height < 750 ? .caption : .callout)
-                .lineLimit(3)
+                .lineLimit(2)
                 .multilineTextAlignment(.center)
                 .padding(.top,8)
                 .padding(.horizontal)
             
             Button {
-                viewModel.showDetailView = true
+                withAnimation(.easeInOut(duration: 0.2)) {
+                    viewModel.selectedCat = cat
+                    
+                }
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.15){
+                    withAnimation(.interactiveSpring(response: 0.6, dampingFraction: 0.7, blendDuration: 0.7)) {
+                        viewModel.showDetailView = true
+                        
+                    }
+                }
             } label: {
                 Text("Learn More")
             }
 
         }
     }
+    
+    
+    // SearchBar View.
+    @ViewBuilder
+    func SearchBar() -> some View {
+        HStack(spacing: 15) {
+            Image(systemName: "magnifyingglass")
+                .font(.title2)
+                .foregroundColor(.gray)
+            
+            TextField("",text: .constant("search"))
+                .disabled(true)
+                .foregroundColor(.gray)
+        }
+        .padding(.vertical,12)
+        .padding(.horizontal)
+        .background {
+            RoundedRectangle(cornerRadius: 15)
+                .fill(Color.blue.opacity(0.2))
+                
+        }
+        
+    }
+    
+    // SearchBar View.
+    @ViewBuilder
+    func LikeBar() -> some View {
+        HStack(spacing: 15) {
+            Image(systemName: "heart")
+                .font(.title2)
+                .foregroundColor(.gray)
+            
+            TextField("",text: .constant("Likes"))
+                .disabled(true)
+                .foregroundColor(.gray)
+        }
+        .padding(.vertical,12)
+        .padding(.horizontal)
+        .background {
+            RoundedRectangle(cornerRadius: 15)
+                .fill(Color.red.opacity(0.2))
+                
+        }
+        
+    }
+    
+    
+    
 }
 
 struct Home_Previews: PreviewProvider {
@@ -112,3 +218,5 @@ extension View {
         return UIScreen.main.bounds
     }
 }
+
+

@@ -7,24 +7,61 @@
 
 import Foundation
 import UIKit
+import Combine
 
-class CatsListViewModel : ObservableObject {
+class CatsViewModel : ObservableObject {
     
-    @Published var cats : [Cats] = [Cats]()
-    @Published var seaCats : [Cats] = [Cats]()
-    @Published var favCatImgId : [Cats] = [Cats]()
+    @Published var cats : [Cats]?
+    @Published var searchCats : [Cats]?
+    @Published var favCatImgId : [Cats] = []
+    
+    @Published var searchText: String = ""
+    @Published var searchActivated: Bool = false
     
     @Published var showDetailView: Bool = false
+    
     @Published var animateCurrentCat: Bool = false
     @Published var animateContent: Bool = false
     @Published var offsetAnimation: Bool = false
     
     @Published var selectedCat: Cats?
     
-    let downloaderClient = DownloaderClient()
-
-
+    let pushPullServices : PushPullServices = PushPullServices()
     
+    private var searchCancellable: AnyCancellable?
+    
+    init() {
+        self.searchCancellable = $searchText.removeDuplicates()
+            .debounce(for: 0.5, scheduler: RunLoop.main)
+            .sink(receiveValue: { str in
+                if str != "" {
+                    self.filterByCats()
+                } else {
+                    self.searchCats = nil
+                }
+            })
+    }
+    
+    // Used to get data from CoreData.
+    func filterByCats() {
+        DispatchQueue.global(qos: .userInteractive).async {
+            if let cats = self.cats {
+                let results = cats
+                    .lazy
+                    .filter { cat in
+                        return cat.name!.lowercased().contains(self.searchText.lowercased())
+                    }
+                
+                DispatchQueue.main.async {
+                    self.searchCats = results.compactMap { mission in
+                        return mission
+                    }
+                    
+                }
+            }
+            
+        }
+    }
     
     func getCats() {
         DispatchQueue.main.async {
@@ -87,24 +124,12 @@ class CatsListViewModel : ObservableObject {
         return ""
     }
     
-    func searchCats(name: String) {
-        self.seaCats = self.cats
-        self.cats.removeAll()
-        
-        for cat in seaCats {
-            if ((cat.name?.starts(with: name)) != nil)
-            {
-                self.cats.append(cat)
-            }
-        }
-    }
-    
     func uploadCats(parameters : String) {
-        downloaderClient.uploadFavorite(parameters: parameters)
+        pushPullServices.uploadFavorite(parameters: parameters)
     }
     
     func deleteCats(imageId : Int) {
-        downloaderClient.deleteFavorite(imageId: imageId)
+        pushPullServices.deleteFavorite(imageId: imageId)
     }
     
     func basicDownloader() {

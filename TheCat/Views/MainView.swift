@@ -9,11 +9,11 @@ import SwiftUI
 
 struct MainView: View {
     
-    @EnvironmentObject var viewModel : CatsListViewModel
+    @EnvironmentObject var viewModel : CatsViewModel
     
     
     var body: some View {
-        if viewModel.cats.count == 0 {
+        if viewModel.cats?.count == 0 {
             PlaceHolder()
                 .onAppear {
                     self.viewModel.basicDownloader()

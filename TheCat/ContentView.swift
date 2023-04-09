@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct ContentView: View {
-    @StateObject var viewModel : CatsListViewModel = CatsListViewModel()
+    @StateObject var viewModel : CatsViewModel = CatsViewModel()
     
     var body: some View {
         MainView()

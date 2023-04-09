@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct CatCardView: View {
-    @EnvironmentObject var viewModel : CatsListViewModel
+    @EnvironmentObject var viewModel : CatsViewModel
     
     var cat : Cats
     var animation: Namespace.ID
@@ -19,14 +19,15 @@ struct CatCardView: View {
             let rect = $0.frame(in: .named("SCROLLVIEW"))
             HStack(spacing: -25) {
                 VStack(alignment: .leading, spacing: 6) {
-                    Text("\(cat.name)")
+                    Text(cat.name ?? "")
                         .font(.title3)
                         .fontWeight(.semibold)
                         .foregroundColor(.black)
                     
-                    Text("Cat Origin is \(cat.origin)")
+                    Text(cat.description ?? "")
                         .font(.caption)
                         .foregroundColor(.gray)
+                  
                     
                     Spacer(minLength: 10)
                     
@@ -36,9 +37,6 @@ struct CatCardView: View {
                             .fontWeight(.semibold)
                             .foregroundColor(.blue)
                         
-                        Text("Views")
-                            .font(.caption)
-                            .foregroundColor(.gray)
                         
                         Spacer(minLength: 0)
                         
@@ -62,17 +60,7 @@ struct CatCardView: View {
                 ZStack {
                     
                     if !(viewModel.showDetailView && viewModel.selectedCat?.id == cat.id) {
-                        Image(uiImage: "data")
-                            .resizable()
-                            .aspectRatio(contentMode: .fill)
-                            .frame(width: size.width / 2, height: size.height)
-                            .clipShape(RoundedRectangle(cornerRadius: 10, style: .continuous))
-                            .matchedGeometryEffect(id: cat.id, in: animation)
-                            .shadow(color: .black.opacity(0.1), radius: 5,x: 5,y: 5)
-                            .shadow(color: .black.opacity(0.1), radius: 5,x: -5,y: -5)
-        
-                            
-                        
+                        Images(url: cat.image?.url ?? "", size: size, isList: true)
                         
                     }
                 }

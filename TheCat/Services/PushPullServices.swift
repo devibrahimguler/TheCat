@@ -8,7 +8,7 @@
 import Foundation
 import UIKit
 
-final class DownloaderClient {
+final class PushPullServices {
     
     func downloadsCats<T:Decodable>(ofType: T.Type,url: String,completion : @escaping (Result<[T]?, DownloadError>) -> Void)
     where T: DataModel{

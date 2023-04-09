@@ -74,14 +74,11 @@ struct SnapCarousel<Content: View, T:Identifiable>: View {
     func getOffset(item: T, width: CGFloat) -> CGFloat {
         
         let progress = ((offset < 0 ? offset: -offset) / width) * 60
-        
         let topOffset = -progress < 60 ? progress : -(progress + 120)
-        
         let previous = getIndex(item: item) - 1 == currentIndex ? (offset < 0 ? topOffset : -topOffset) : 0
-        
         let next = getIndex(item: item) + 1 == currentIndex ? (offset < 0 ? -topOffset : topOffset) : 0
-        
         let checkBetween = currentIndex >= 0 && currentIndex < list.count ? (getIndex(item: item) - 1 == currentIndex ? previous : next) : 0
+        
         return getIndex(item: item) == currentIndex ? -60 - topOffset : checkBetween
     }
     
