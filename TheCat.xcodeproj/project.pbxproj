@@ -10,12 +10,9 @@
 		0F10778829DFA5C100CCBAD8 /* ListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F10778729DFA5C100CCBAD8 /* ListView.swift */; };
 		0F440DBC29DFE94200745C48 /* SnapCarousel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F440DBB29DFE94200745C48 /* SnapCarousel.swift */; };
 		0F440DBE29DFE99500745C48 /* Home.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F440DBD29DFE99500745C48 /* Home.swift */; };
-		0F440DC129DFECB900745C48 /* data.json in Resources */ = {isa = PBXBuildFile; fileRef = 0F440DC029DFECB900745C48 /* data.json */; };
-		0F440DC329DFECDA00745C48 /* ReadData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F440DC229DFECDA00745C48 /* ReadData.swift */; };
 		0F658E09280A3F9D00DB470F /* PlaceHolder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F658E08280A3F9D00DB470F /* PlaceHolder.swift */; };
 		0F658E0B280A47FA00DB470F /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F658E0A280A47FA00DB470F /* ContentView.swift */; };
 		0F6FF9F82804A12400469A3A /* TheCatApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F6FF9F72804A12400469A3A /* TheCatApp.swift */; };
-		0F6FF9FC2804A12400469A3A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0F6FF9FB2804A12400469A3A /* Assets.xcassets */; };
 		0F6FF9FF2804A12400469A3A /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0F6FF9FE2804A12400469A3A /* Preview Assets.xcassets */; };
 		0F6FFA0A2804A21800469A3A /* Cats.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F6FFA092804A21800469A3A /* Cats.swift */; };
 		0F6FFA112804F21400469A3A /* PushPullServices.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F6FFA102804F21400469A3A /* PushPullServices.swift */; };
@@ -23,6 +20,7 @@
 		0F6FFA16280586C200469A3A /* ImageDownloaderClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F6FFA15280586C200469A3A /* ImageDownloaderClient.swift */; };
 		0F6FFA192805C1B300469A3A /* Images.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F6FFA182805C1B300469A3A /* Images.swift */; };
 		0FEA7AEE29E5205B003B34D6 /* APIKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FEA7AED29E5205B003B34D6 /* APIKey.swift */; };
+		0FEA7AF229E5844E003B34D6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0FEA7AF129E5844E003B34D6 /* Assets.xcassets */; };
 		0FECC8EE29E36C32008B6AB2 /* CatCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FECC8ED29E36C32008B6AB2 /* CatCardView.swift */; };
 		0FECC8F029E3CCD8008B6AB2 /* LikesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FECC8EF29E3CCD8008B6AB2 /* LikesView.swift */; };
 		0FF5785F29E0D1640083A6C0 /* DetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FF5785E29E0D1640083A6C0 /* DetailView.swift */; };
@@ -34,13 +32,10 @@
 		0F10778729DFA5C100CCBAD8 /* ListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListView.swift; sourceTree = "<group>"; };
 		0F440DBB29DFE94200745C48 /* SnapCarousel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SnapCarousel.swift; sourceTree = "<group>"; };
 		0F440DBD29DFE99500745C48 /* Home.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Home.swift; sourceTree = "<group>"; };
-		0F440DC029DFECB900745C48 /* data.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = data.json; sourceTree = "<group>"; };
-		0F440DC229DFECDA00745C48 /* ReadData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReadData.swift; sourceTree = "<group>"; };
 		0F658E08280A3F9D00DB470F /* PlaceHolder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceHolder.swift; sourceTree = "<group>"; };
 		0F658E0A280A47FA00DB470F /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		0F6FF9F42804A12300469A3A /* TheCat.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TheCat.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0F6FF9F72804A12400469A3A /* TheCatApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TheCatApp.swift; sourceTree = "<group>"; };
-		0F6FF9FB2804A12400469A3A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		0F6FF9FE2804A12400469A3A /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		0F6FFA092804A21800469A3A /* Cats.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Cats.swift; sourceTree = "<group>"; };
 		0F6FFA102804F21400469A3A /* PushPullServices.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PushPullServices.swift; sourceTree = "<group>"; };
@@ -48,6 +43,7 @@
 		0F6FFA15280586C200469A3A /* ImageDownloaderClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageDownloaderClient.swift; sourceTree = "<group>"; };
 		0F6FFA182805C1B300469A3A /* Images.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Images.swift; sourceTree = "<group>"; };
 		0FEA7AED29E5205B003B34D6 /* APIKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIKey.swift; sourceTree = "<group>"; };
+		0FEA7AF129E5844E003B34D6 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		0FECC8ED29E36C32008B6AB2 /* CatCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CatCardView.swift; sourceTree = "<group>"; };
 		0FECC8EF29E3CCD8008B6AB2 /* LikesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LikesView.swift; sourceTree = "<group>"; };
 		0FF5785E29E0D1640083A6C0 /* DetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailView.swift; sourceTree = "<group>"; };
@@ -67,15 +63,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		0F440DBF29DFECA700745C48 /* data */ = {
-			isa = PBXGroup;
-			children = (
-				0F440DC229DFECDA00745C48 /* ReadData.swift */,
-				0F440DC029DFECB900745C48 /* data.json */,
-			);
-			path = data;
-			sourceTree = "<group>";
-		};
 		0F6FF9EB2804A12300469A3A = {
 			isa = PBXGroup;
 			children = (
@@ -95,17 +82,16 @@
 		0F6FF9F62804A12300469A3A /* TheCat */ = {
 			isa = PBXGroup;
 			children = (
-				0FEA7AEC29E5203C003B34D6 /* Secret */,
-				0F440DBF29DFECA700745C48 /* data */,
 				0FF8032B28090C9900107E5B /* Info.plist */,
+				0F6FF9FD2804A12400469A3A /* Preview Content */,
+				0FEA7AEC29E5203C003B34D6 /* Secret */,
 				0F6FFA122805187D00469A3A /* ViewModel */,
 				0F6FFA0F2804F14700469A3A /* Services */,
 				0F6FFA082804A20F00469A3A /* Model */,
 				0F6FFA052804A19200469A3A /* Views */,
 				0F6FF9F72804A12400469A3A /* TheCatApp.swift */,
 				0F658E0A280A47FA00DB470F /* ContentView.swift */,
-				0F6FF9FB2804A12400469A3A /* Assets.xcassets */,
-				0F6FF9FD2804A12400469A3A /* Preview Content */,
+				0FEA7AF129E5844E003B34D6 /* Assets.xcassets */,
 			);
 			path = TheCat;
 			sourceTree = "<group>";
@@ -235,8 +221,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				0F6FF9FF2804A12400469A3A /* Preview Assets.xcassets in Resources */,
-				0F440DC129DFECB900745C48 /* data.json in Resources */,
-				0F6FF9FC2804A12400469A3A /* Assets.xcassets in Resources */,
+				0FEA7AF229E5844E003B34D6 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -264,7 +249,6 @@
 				0F6FFA16280586C200469A3A /* ImageDownloaderClient.swift in Sources */,
 				0F440DBE29DFE99500745C48 /* Home.swift in Sources */,
 				0FEA7AEE29E5205B003B34D6 /* APIKey.swift in Sources */,
-				0F440DC329DFECDA00745C48 /* ReadData.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

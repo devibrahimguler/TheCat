@@ -34,7 +34,7 @@ struct DetailView: View {
                     
                     Text("\(cat.name ?? "")")
                         .foregroundColor(.black)
-                        .font(.title)
+                        .font(.title3)
                         .fontWeight(.semibold)
                         .padding(.trailing, 15)
                 
@@ -42,11 +42,13 @@ struct DetailView: View {
                     
                     if viewModel.isProgressLike {
                         ProgressView()
+                            .font(.title2)
+                            .foregroundColor(.red.opacity(0.7))
                     } else {
                         Button {
                             withAnimation(.easeOut(duration: 1)) {
                                 if viewModel.isLike {
-                                    viewModel.deleteFavCats(catId: (cat.id)!)
+                                    viewModel.deleteFavoriteViaCats(cat: cat)
                                 } else {
                                     if let imageId = cat.image?.id {
                                         viewModel.uploadFavCats(imageId: imageId)
@@ -107,22 +109,14 @@ struct DetailView: View {
         .onAppear{
             withAnimation(.easeInOut(duration: 0.35)) {
                 viewModel.animateContent = true
-                if let favCats = viewModel.favoriteCats {
-                    viewModel.isLike = favCats.contains { fav in
-                        return cat.image?.id == fav.image?.id
-                    }
-                }
+                viewModel.controlCatLike(cat: cat)
             }
             withAnimation(.easeInOut(duration: 0.35).delay(0.1)) {
                 viewModel.offsetAnimation = true
             }
             
         }.onChange(of: viewModel.favoriteCats?.count) { newValue in
-            if let favCats = viewModel.favoriteCats {
-                viewModel.isLike = favCats.contains { fav in
-                    return cat.image?.id == fav.image?.id
-                }
-            }
+            viewModel.controlCatLike(cat: cat)
         }
 
     }

@@ -108,22 +108,35 @@ class CatsViewModel : ObservableObject {
                 if let imagesArray = imagesArray {
                     DispatchQueue.main.async {
                         self.favoriteCats = imagesArray
+                        DispatchQueue.main.async {
+                            self.isProgressLike = false
+                            
+                        }
                     }
                 }
             }
         }
     }
     
-    func getCats() {
-        DispatchQueue.main.async {
-            self.cats = ReadData().cats
+    func getCatsFromAPI() {
+        let url = "https://api.thecatapi.com/v1/breeds"
+        pushPullServices.downloadsCats(ofType: Cats.self, url: url) { result in
+            switch result {
+            case .failure(let error):
+                print(error)
+            case .success(let catsArray):
+                if let catsArray = catsArray {
+                    DispatchQueue.main.async {
+                        self.cats = catsArray
+                    }
+                }
+            }
         }
-        
     }
     
     func uploadFavCats(imageId : String) {
         DispatchQueue.main.async {
-            self.isProgressLike = false
+            self.isProgressLike = true
             
         }
 
@@ -141,13 +154,44 @@ class CatsViewModel : ObservableObject {
         }
     }
     
-    func deleteFavCats(catId : String) {
-        pushPullServices.deleteFavorite(catId: catId)
+    func deleteFavCats(favoriteId : Int) {
+        DispatchQueue.main.async {
+            self.isProgressLike = true
+            
+        }
+        pushPullServices.deleteFavorite(favoriteId: favoriteId) { result in
+            switch result {
+            case .failure(let err):
+                print(err)
+            case .success(let postMessage):
+                print(postMessage)
+                DispatchQueue.main.async {
+                    self.getFavoriteCats()
+                }
+               
+            }
+        }
         getFavoriteCats()
     }
     
+    func controlCatLike(cat: Cats) {
+        if let favCats = self.favoriteCats {
+            self.isLike = favCats.contains { fav in
+                return cat.image?.id == fav.image?.id
+            }
+        }
+    }
+    
+    func deleteFavoriteViaCats(cat: Cats) {
+        if let favoriteId = self.favoriteCats?.first(where: { fav in
+            return fav.image?.id == cat.image?.id
+        })?.id {
+            self.deleteFavCats(favoriteId:  favoriteId)
+        }
+    }
+    
     func basicDownloader() {
-        self.getCats()
+        self.getCatsFromAPI()
         self.filterByFavoriteCats()
     }
 }

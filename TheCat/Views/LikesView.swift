@@ -27,6 +27,12 @@ struct LikesView: View {
                 }
                 
                 Spacer(minLength: 10)
+                Text("Cats You Like")
+                    .foregroundColor(.black)
+                    .font(.title3)
+                    .fontWeight(.semibold)
+                    .padding(.trailing, 15)
+                Spacer(minLength: 10)
                 
             }
             .padding(.horizontal)
@@ -35,7 +41,7 @@ struct LikesView: View {
             if let cats = viewModel.searchCats {
                 if cats.isEmpty {
                     VStack{
-                        Text("Item not found !")
+                        Text("Item not found!")
                             .font(.title)
                             .fontWeight(.semibold)
                         
@@ -57,16 +63,16 @@ struct LikesView: View {
                 }
             }
             else {
-                if !viewModel.searchText.isEmpty {
-                    ProgressView()
-                        .padding(.top, 30)
-                }
+                ProgressView()
+                    .padding(.top, 30)
             }
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
         .background {
             Color.white
                 .ignoresSafeArea()
+        }.onChange(of: viewModel.favoriteCats?.count) { newValue in
+            viewModel.filterByFavoriteCats()
         }
         .onChange(of: viewModel.showDetailView) { newValue in
             if !newValue {

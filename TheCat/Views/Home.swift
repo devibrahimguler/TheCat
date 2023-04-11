@@ -153,7 +153,7 @@ struct Home: View {
                     }
                 }
             } label: {
-                Text("Learn More")
+                Text("Read More")
             }
 
         }

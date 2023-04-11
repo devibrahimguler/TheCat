@@ -11,8 +11,12 @@ struct ContentView: View {
     @StateObject var viewModel : CatsViewModel = CatsViewModel()
     
     var body: some View {
-        Home()
-            .environmentObject(viewModel)
+        if (viewModel.cats != nil) {
+            Home()
+                .environmentObject(viewModel)
+        } else {
+            PlaceHolder()
+        }
     }
 }
 

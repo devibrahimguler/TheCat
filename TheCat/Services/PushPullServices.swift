@@ -57,17 +57,17 @@ final class PushPullServices {
         }.resume()
     }
     
-    func deleteFavorite(catId : String) {
+    func deleteFavorite(favoriteId : Int, completion : @escaping (Result<String, PostError>) -> Void) {
         
-        var request = URLRequest(url: URL(string: "https://api.thecatapi.com/v1/favourites/\(catId)")!,timeoutInterval: Double.infinity)
+        var request = URLRequest(url: URL(string: "https://api.thecatapi.com/v1/favourites/\(favoriteId)")!,timeoutInterval: Double.infinity)
 
         request.httpMethod = "DELETE"
         request.allHTTPHeaderFields = ["content-type": "application/json","x-api-key":  APIKey().xapikey]
         
         URLSession.shared.dataTask(with: request) { data, response, error in
-            guard let data = data, error == nil else { return }
+            guard let data = data, error == nil else { return completion(.failure(.dontPostData)) }
             
-            print(String(data: data, encoding: .utf8)!)
+            completion(.success(String(data: data, encoding: .utf8)!))
             
         }.resume()
     }
