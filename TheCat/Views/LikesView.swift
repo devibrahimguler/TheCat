@@ -1,15 +1,15 @@
 //
-//  SearchView.swift
+//  LikesView.swift
 //  TheCat
 //
-//  Created by İbrahim Güler on 8.04.2023.
+//  Created by İbrahim Güler on 10.04.2023.
 //
 
 import SwiftUI
 
-struct SearchView: View {
+struct LikesView: View {
+    
     @EnvironmentObject var viewModel : CatsViewModel
-    @FocusState var startTF: Bool
     var animation: Namespace.ID
     
     var body: some View {
@@ -17,9 +17,7 @@ struct SearchView: View {
             HStack(spacing: 15) {
                 Button {
                     withAnimation{
-                        startTF = false
-                        viewModel.searchActivated = false
-                        viewModel.searchText = ""
+                        viewModel.showLikeView = false
                         viewModel.searchCats = []
                     }
                 } label: {
@@ -28,29 +26,7 @@ struct SearchView: View {
                         .foregroundColor(.black.opacity(0.7))
                 }
                 
-                HStack(spacing: 15) {
-                    Image(systemName: "magnifyingglass")
-                    
-                        .font(.title2)
-                        .foregroundColor(.gray)
-                    
-                    TextField("", text: $viewModel.searchText)
-                        .placeholder(when: viewModel.searchText.isEmpty) {
-                                Text("search").foregroundColor(.gray)
-                        }
-                        .foregroundColor(.black)
-                        .focused($startTF)
-                        .textCase(.lowercase)
-                        .disableAutocorrection(true)
-                }
-                .padding(.vertical,12)
-                .padding(.horizontal)
-                .background {
-                    Capsule()
-                        .strokeBorder(Color.black,lineWidth: 1.5)
-                }
-                .matchedGeometryEffect(id: "SEARCHBAR", in: animation)
-                .padding(.trailing, 20)
+                Spacer(minLength: 10)
                 
             }
             .padding(.horizontal)
@@ -98,32 +74,15 @@ struct SearchView: View {
                     viewModel.animateCurrentCat = false
                 }
             }
+        }.onAppear {
+            viewModel.filterByFavoriteCats()
         }
-        .onAppear {
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-                startTF = true
-            }
-        }
+
     }
 }
 
-struct SearchView_Previews: PreviewProvider {
+struct LikesView_Previews: PreviewProvider {
     static var previews: some View {
         ContentView()
     }
 }
-
-// Used to make a view within a view.
-extension View {
-    func placeholder<Content: View>(
-        when shouldShow: Bool,
-        alignment: Alignment = .leading,
-        @ViewBuilder placeholder: () -> Content) -> some View {
-
-        ZStack(alignment: alignment) {
-            placeholder().opacity(shouldShow ? 1 : 0)
-            self
-        }
-    }
-}
-

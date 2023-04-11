@@ -19,15 +19,14 @@ struct CatCardView: View {
             let rect = $0.frame(in: .named("SCROLLVIEW"))
             HStack(spacing: -25) {
                 VStack(alignment: .leading, spacing: 6) {
-                    Text(cat.name ?? "")
+                    Text(cat.name!)
                         .font(.title3)
                         .fontWeight(.semibold)
                         .foregroundColor(.black)
                     
-                    Text(cat.description ?? "")
+                    Text(cat.description!)
                         .font(.caption)
                         .foregroundColor(.gray)
-                  
                     
                     Spacer(minLength: 10)
                     
@@ -61,7 +60,6 @@ struct CatCardView: View {
                     
                     if !(viewModel.showDetailView && viewModel.selectedCat?.id == cat.id) {
                         Images(url: cat.image?.url ?? "", size: size, isList: true)
-                        
                     }
                 }
                 .frame(maxWidth: .infinity, maxHeight: .infinity)

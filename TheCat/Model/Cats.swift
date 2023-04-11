@@ -44,11 +44,19 @@ struct CatsImages :Codable {
 }
 
 struct CatsFavorite :DataModel, Identifiable, Codable {
-    let id : Int
+    let id : Int?
+    let user_id : String?
+    let image_id : String?
+    let sub_id : String?
+    let created_at : String?
     let image : CatsImages?
-    
+
     private enum CodingKeys : String, CodingKey {
         case id = "id"
+        case user_id = "user_id"
+        case image_id = "image_id"
+        case sub_id = "sub_id"
+        case created_at = "created_at"
         case image = "image"
     }
 }

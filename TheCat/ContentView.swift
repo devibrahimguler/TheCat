@@ -11,7 +11,7 @@ struct ContentView: View {
     @StateObject var viewModel : CatsViewModel = CatsViewModel()
     
     var body: some View {
-        MainView()
+        Home()
             .environmentObject(viewModel)
     }
 }

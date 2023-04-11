@@ -17,7 +17,11 @@ struct DetailView: View {
             VStack(spacing: 10) {
                 HStack(spacing: 15) {
                     Button {
-                        withAnimation{
+                        withAnimation(.easeInOut(duration: 0.2)) {
+                            viewModel.offsetAnimation = false
+                        }
+                        withAnimation(.easeInOut(duration: 0.35).delay(0.1)) {
+                            viewModel.animateContent = false
                             viewModel.showDetailView = false
                         }
                     } label: {
@@ -27,52 +31,60 @@ struct DetailView: View {
                     }
                     
                     Spacer(minLength: 10)
+                    
+                    Text("\(cat.name ?? "")")
+                        .foregroundColor(.black)
+                        .font(.title)
+                        .fontWeight(.semibold)
+                        .padding(.trailing, 15)
                 
+                    Spacer(minLength: 10)
+                    
+                    if viewModel.isProgressLike {
+                        ProgressView()
+                    } else {
+                        Button {
+                            withAnimation(.easeOut(duration: 1)) {
+                                if viewModel.isLike {
+                                    viewModel.deleteFavCats(catId: (cat.id)!)
+                                } else {
+                                    if let imageId = cat.image?.id {
+                                        viewModel.uploadFavCats(imageId: imageId)
+                                    }
+                                }
+                            }
+                        } label: {
+                            Image(systemName: viewModel.isLike ? "heart.fill" : "heart")
+                                .font(.title2)
+                                .foregroundColor(.red.opacity(0.7))
+                        }
+                    }
+                    
                     
                 }
                 .padding()
-                
-                
-                GeometryReader {
-                    let size = $0.size
-                    
-                    HStack(spacing: 20) {
-                        
-                        Images(url: cat.image?.url ?? "", size: CGSize(width: size.width, height: size.height), isList: true)
-                            .cornerRadius(10)
-                            .matchedGeometryEffect(id: cat.id, in: animation)
-                        
-                        
-                        Text("\(cat.name ?? "")")
-                            .foregroundColor(.black)
-                            .font(.title)
-                            .fontWeight(.semibold)
-                            .padding(.trailing, 15)
-                            //.offset(y: viewModel.offsetAnimation ? 0 : 100)
-                            //.opacity(viewModel.offsetAnimation ? 1 : 0)
-                        
-                    }
-                }
-                .frame(height: 220)
                 .zIndex(1)
+                
+                Images(url: cat.image?.url ?? "", size: CGSize(width: getRect().width - 20, height: 320))
+                    .cornerRadius(20)
+                    .padding(.horizontal, 10)
+                    .zIndex(0)
                 
                 VStack(spacing: 0) {
                     
                     Divider()
                     
-                    VStack(alignment: .leading, spacing: 15) {
-                        VStack(alignment: .leading, spacing: 5) {
-                            InfoView(title: "name", subTitle: "\(cat.name ?? "")")
-                            InfoView(title: "Description", subTitle: "\(cat.description ?? "")")
-                            InfoView(title: "Origin", subTitle: "\(cat.origin ?? "")")
-                            InfoView(title: "Wikipedia URL", subTitle: "\(cat.wikipedia_url ?? "")")
-                            InfoView(title: "Life Span", subTitle: "\(cat.life_span ?? "")")
-                            InfoView(title: "dog Friendly", subTitle: "\(cat.dog_friendly ?? 0)")
-                            
-                            
-                        }
-                        .frame(maxWidth: .infinity)
+                    VStack(alignment: .leading, spacing: 10) {
+                        
+                        InfoView(title: "Description", subTitle: "\(cat.description ?? "")")
+                        InfoView(title: "Origin", subTitle: "\(cat.origin ?? "")")
+                        InfoView(title: "Wikipedia URL", subTitle: "\(cat.wikipedia_url ?? "")")
+                        InfoView(title: "Life Span", subTitle: "\(cat.life_span ?? "")")
+                        InfoView(title: "dog Friendly", subTitle: "\(cat.dog_friendly ?? 0)")
+                     
+ 
                     }
+                    .frame(maxWidth: .infinity)
                     .padding(.bottom, 15)
           
                     
@@ -80,24 +92,37 @@ struct DetailView: View {
                 .padding(.top, 20)
                 .padding(.horizontal, 15)
                 .padding(.leading, 30)
-                //.offset(y: viewModel.offsetAnimation ? 0 : 100)
-                //.opacity(viewModel.offsetAnimation ? 1 : 0)
-                
-                
-                
-                
+                .padding(viewModel.animateContent ? 1 : 0)
             }
-   
-            
-            
         }
+        .offset(y: viewModel.offsetAnimation ? 0 : 300)
+        .opacity(viewModel.offsetAnimation ? 1 : 0)
         .frame(maxWidth: .infinity,maxHeight: .infinity)
         .background{
             Rectangle()
                 .fill(.white)
                 .ignoresSafeArea()
-                //.opacity(viewModel.animateContent ? 1 : 0)
+                .opacity(viewModel.animateContent ? 1 : 0)
+        }
+        .onAppear{
+            withAnimation(.easeInOut(duration: 0.35)) {
+                viewModel.animateContent = true
+                if let favCats = viewModel.favoriteCats {
+                    viewModel.isLike = favCats.contains { fav in
+                        return cat.image?.id == fav.image?.id
+                    }
+                }
+            }
+            withAnimation(.easeInOut(duration: 0.35).delay(0.1)) {
+                viewModel.offsetAnimation = true
+            }
             
+        }.onChange(of: viewModel.favoriteCats?.count) { newValue in
+            if let favCats = viewModel.favoriteCats {
+                viewModel.isLike = favCats.contains { fav in
+                    return cat.image?.id == fav.image?.id
+                }
+            }
         }
 
     }

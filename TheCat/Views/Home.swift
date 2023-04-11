@@ -16,83 +16,88 @@ struct Home: View {
     
     var body: some View {
         ZStack {
-            TabView(selection: $currentIndex) {
-                ForEach(viewModel.cats?.indices ?? [Cats]().indices, id: \.self) { index in
-                    GeometryReader { proxy in
-                        Images(url: viewModel.cats?[index].image?.url ?? "", size: proxy.size)
+            if viewModel.cats?.count == 0 {
+                PlaceHolder()
+            } else {
+                TabView(selection: $currentIndex) {
+                    ForEach(viewModel.cats?.indices ?? [Cats]().indices, id: \.self) { index in
+                        GeometryReader { proxy in
+                            Images(url: viewModel.cats?[index].image?.url ?? "", size: proxy.size)
+                        }
+                        .ignoresSafeArea()
+                        .offset(y: -100)
                     }
-                    .ignoresSafeArea()
-                    .offset(y: -100)
                 }
-            }
-            .tabViewStyle(PageTabViewStyle(indexDisplayMode: .never))
-            .animation(.easeInOut, value: currentIndex)
-            .overlay {
-                LinearGradient(colors: [
-                    Color.clear,
-                    Color.black.opacity(0.2),
-                    Color.white.opacity(0.4),
-                    Color.white,
-                    Color.white,
-                    Color.white,
-        
-                ], startPoint: .top, endPoint: .bottom)
-            }
-            .ignoresSafeArea()
+                .tabViewStyle(PageTabViewStyle(indexDisplayMode: .never))
+                .animation(.easeInOut, value: currentIndex)
+                .overlay {
+                    LinearGradient(colors: [
+                        Color.clear,
+                        Color.black.opacity(0.2),
+                        Color.white.opacity(0.4),
+                        Color.white,
+                        Color.white,
+                        Color.white,
             
-            SnapCarousel(spacing: getRect().height < 750 ? 15 : 20,trailingSpace: getRect().height < 750 ? 100 : 130,index: $currentIndex, items: viewModel.cats ?? []) { cat in
-                CardView(cat: cat)
-            }
-            .offset(y: getRect().height / 3.5)
-            
-            VStack {
-                Spacer()
-                HStack(spacing: 15) {
-                    
-                    ZStack {
-                        LikeBar()
-                    }
-                    .frame(width: getRect().width / 3)
-                        .padding(.leading, 5)
+                    ], startPoint: .top, endPoint: .bottom)
+                }
+                .ignoresSafeArea()
+                
+                SnapCarousel(spacing: getRect().height < 750 ? 15 : 20,trailingSpace: getRect().height < 750 ? 100 : 130,index: $currentIndex, items: viewModel.cats ?? []) { cat in
+                    CardView(cat: cat)
+                }
+                .offset(y: getRect().height / 3.5)
+                
+                VStack {
+                    Spacer()
+                    HStack(spacing: 15) {
+                        
+                        ZStack {
+                            LikeBar()
+                        }
+                        .frame(width: getRect().width / 3)
+                            .padding(.leading, 5)
+                            .contentShape(Rectangle())
+                            .onTapGesture {
+                                withAnimation(.easeInOut) {
+                                    viewModel.showLikeView = true
+                                }
+                            }
+                        
+                        ZStack {
+                            if viewModel.searchActivated {
+                                SearchBar()
+                                  
+                            } else {
+                                SearchBar()
+                                    .matchedGeometryEffect(id: "SEARCHBAR", in: animation)
+                            }
+                            
+                        }
+                        .frame(width: getRect().width / 3)
+                        .padding(.horizontal, 5)
                         .contentShape(Rectangle())
                         .onTapGesture {
                             withAnimation(.easeInOut) {
-                                
+                                viewModel.searchActivated = true
+                                viewModel.selectedCat = nil
                             }
-                        }
-                    
-                    ZStack {
-                        if viewModel.searchActivated {
-                            SearchBar()
-                              
-                        } else {
-                            SearchBar()
-                                .matchedGeometryEffect(id: "SEARCHBAR", in: animation)
                         }
                         
                     }
-                    .frame(width: getRect().width / 3)
-                    .padding(.horizontal, 5)
-                    .contentShape(Rectangle())
-                    .onTapGesture {
-                        withAnimation(.easeInOut) {
-                            viewModel.searchActivated = true
-                            viewModel.selectedCat = nil
-                        }
-                    }
-                    
+                    .padding(.vertical)
+                    .frame(maxWidth: .infinity, alignment: .bottom)
+                    .padding (.horizontal, 15)
                 }
-                .padding(.vertical)
-                .frame(maxWidth: .infinity, alignment: .bottom)
-                .padding (.horizontal, 15)
             }
-                
-            
-
-           
         }
         .overlay(content: {
             ZStack {
+                if viewModel.showLikeView {
+                    LikesView(animation: animation)
+                        .environmentObject(viewModel)
+                      
+                }
                 if viewModel.searchActivated {
                     SearchView(animation: animation)
                         .environmentObject(viewModel)
@@ -105,11 +110,6 @@ struct Home: View {
                 }
             }
         })
-        .onAppear {
-            self.viewModel.basicDownloader()
-            self.viewModel.favoriteCats()
-        }
-        
         
     }
     
@@ -119,7 +119,6 @@ struct Home: View {
             GeometryReader {proxy in
                 Images(url: cat.image?.url ?? "", size: proxy.size)
                     .cornerRadius(25)
-                    .matchedGeometryEffect(id: cat.id, in: animation)
             }
             .padding(15)
             .background(Color.white)
@@ -131,6 +130,7 @@ struct Home: View {
             Text(cat.name!)
                 .font(.title2.bold())
                 .lineLimit(1)
+        
             
             
             Text(cat.description!)
@@ -139,6 +139,7 @@ struct Home: View {
                 .multilineTextAlignment(.center)
                 .padding(.top,8)
                 .padding(.horizontal)
+    
             
             Button {
                 withAnimation(.easeInOut(duration: 0.2)) {
@@ -148,7 +149,7 @@ struct Home: View {
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.15){
                     withAnimation(.interactiveSpring(response: 0.6, dampingFraction: 0.7, blendDuration: 0.7)) {
                         viewModel.showDetailView = true
-                        
+                        viewModel.offsetAnimation = false
                     }
                 }
             } label: {
