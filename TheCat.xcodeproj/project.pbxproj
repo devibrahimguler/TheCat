@@ -22,6 +22,7 @@
 		0F6FFA142805189400469A3A /* CatsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F6FFA132805189400469A3A /* CatsViewModel.swift */; };
 		0F6FFA16280586C200469A3A /* ImageDownloaderClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F6FFA15280586C200469A3A /* ImageDownloaderClient.swift */; };
 		0F6FFA192805C1B300469A3A /* Images.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F6FFA182805C1B300469A3A /* Images.swift */; };
+		0FEA7AEE29E5205B003B34D6 /* APIKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FEA7AED29E5205B003B34D6 /* APIKey.swift */; };
 		0FECC8EE29E36C32008B6AB2 /* CatCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FECC8ED29E36C32008B6AB2 /* CatCardView.swift */; };
 		0FECC8F029E3CCD8008B6AB2 /* LikesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FECC8EF29E3CCD8008B6AB2 /* LikesView.swift */; };
 		0FF5785F29E0D1640083A6C0 /* DetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FF5785E29E0D1640083A6C0 /* DetailView.swift */; };
@@ -46,6 +47,7 @@
 		0F6FFA132805189400469A3A /* CatsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CatsViewModel.swift; sourceTree = "<group>"; };
 		0F6FFA15280586C200469A3A /* ImageDownloaderClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageDownloaderClient.swift; sourceTree = "<group>"; };
 		0F6FFA182805C1B300469A3A /* Images.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Images.swift; sourceTree = "<group>"; };
+		0FEA7AED29E5205B003B34D6 /* APIKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIKey.swift; sourceTree = "<group>"; };
 		0FECC8ED29E36C32008B6AB2 /* CatCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CatCardView.swift; sourceTree = "<group>"; };
 		0FECC8EF29E3CCD8008B6AB2 /* LikesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LikesView.swift; sourceTree = "<group>"; };
 		0FF5785E29E0D1640083A6C0 /* DetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailView.swift; sourceTree = "<group>"; };
@@ -93,6 +95,7 @@
 		0F6FF9F62804A12300469A3A /* TheCat */ = {
 			isa = PBXGroup;
 			children = (
+				0FEA7AEC29E5203C003B34D6 /* Secret */,
 				0F440DBF29DFECA700745C48 /* data */,
 				0FF8032B28090C9900107E5B /* Info.plist */,
 				0F6FFA122805187D00469A3A /* ViewModel */,
@@ -163,6 +166,14 @@
 				0FECC8ED29E36C32008B6AB2 /* CatCardView.swift */,
 			);
 			path = Helper;
+			sourceTree = "<group>";
+		};
+		0FEA7AEC29E5203C003B34D6 /* Secret */ = {
+			isa = PBXGroup;
+			children = (
+				0FEA7AED29E5205B003B34D6 /* APIKey.swift */,
+			);
+			path = Secret;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -252,6 +263,7 @@
 				0F10778829DFA5C100CCBAD8 /* ListView.swift in Sources */,
 				0F6FFA16280586C200469A3A /* ImageDownloaderClient.swift in Sources */,
 				0F440DBE29DFE99500745C48 /* Home.swift in Sources */,
+				0FEA7AEE29E5205B003B34D6 /* APIKey.swift in Sources */,
 				0F440DC329DFECDA00745C48 /* ReadData.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

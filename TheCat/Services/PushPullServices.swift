@@ -18,7 +18,7 @@ final class PushPullServices {
         }
     
         request.httpMethod = "GET"
-        request.allHTTPHeaderFields = ["content-type": "application/json", "x-api-key": "eee91339-815d-4910-89cb-77a5c6fd0d4f"]
+        request.allHTTPHeaderFields = ["content-type": "application/json", "x-api-key": APIKey().xapikey]
         
         
         URLSession.shared.dataTask(with: request) { data, response, error in
@@ -43,7 +43,7 @@ final class PushPullServices {
         }
         var request = URLRequest(url: URL(string: "https://api.thecatapi.com/v1/favourites")!,timeoutInterval: Double.infinity)
         request.httpMethod = "POST"
-        request.allHTTPHeaderFields = ["content-type": "application/json","x-api-key": "eee91339-815d-4910-89cb-77a5c6fd0d4f"]
+        request.allHTTPHeaderFields = ["content-type": "application/json","x-api-key":  APIKey().xapikey]
         request.addValue("gxibrahimxr", forHTTPHeaderField: "sub_id")
         request.httpBody = postData
         
@@ -62,7 +62,7 @@ final class PushPullServices {
         var request = URLRequest(url: URL(string: "https://api.thecatapi.com/v1/favourites/\(catId)")!,timeoutInterval: Double.infinity)
 
         request.httpMethod = "DELETE"
-        request.allHTTPHeaderFields = ["content-type": "application/json","x-api-key": "eee91339-815d-4910-89cb-77a5c6fd0d4f"]
+        request.allHTTPHeaderFields = ["content-type": "application/json","x-api-key":  APIKey().xapikey]
         
         URLSession.shared.dataTask(with: request) { data, response, error in
             guard let data = data, error == nil else { return }
