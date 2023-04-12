@@ -168,9 +168,11 @@ struct Home: View {
                 .font(.title2)
                 .foregroundColor(.gray)
             
-            TextField("",text: .constant("search"))
-                .disabled(true)
-                .foregroundColor(.gray)
+            if !(getRect().height < 750) {
+                TextField("",text: .constant("search"))
+                    .disabled(true)
+                    .foregroundColor(.gray)
+            }
         }
         .padding(.vertical,12)
         .padding(.horizontal)
@@ -190,9 +192,11 @@ struct Home: View {
                 .font(.title2)
                 .foregroundColor(.gray)
             
-            TextField("",text: .constant("Likes"))
-                .disabled(true)
-                .foregroundColor(.gray)
+            if !(getRect().height < 750) {
+                TextField("",text: .constant("Likes"))
+                    .disabled(true)
+                    .foregroundColor(.gray)
+            }
         }
         .padding(.vertical,12)
         .padding(.horizontal)

@@ -19,6 +19,12 @@
 		0F6FFA142805189400469A3A /* CatsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F6FFA132805189400469A3A /* CatsViewModel.swift */; };
 		0F6FFA16280586C200469A3A /* ImageDownloaderClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F6FFA15280586C200469A3A /* ImageDownloaderClient.swift */; };
 		0F6FFA192805C1B300469A3A /* Images.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F6FFA182805C1B300469A3A /* Images.swift */; };
+		0FA5E38F29E640D800F3DD47 /* RatingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FA5E38E29E640D800F3DD47 /* RatingView.swift */; };
+		0FA5E39129E652F000F3DD47 /* SubPropertyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FA5E39029E652F000F3DD47 /* SubPropertyView.swift */; };
+		0FA5E39329E65B0600F3DD47 /* BridgeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FA5E39229E65B0600F3DD47 /* BridgeView.swift */; };
+		0FA5E39529E65DB800F3DD47 /* Rating.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FA5E39429E65DB800F3DD47 /* Rating.swift */; };
+		0FA5E39729E660D400F3DD47 /* Bridge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FA5E39629E660D400F3DD47 /* Bridge.swift */; };
+		0FA5E39929E661C600F3DD47 /* Info.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FA5E39829E661C600F3DD47 /* Info.swift */; };
 		0FEA7AEE29E5205B003B34D6 /* APIKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FEA7AED29E5205B003B34D6 /* APIKey.swift */; };
 		0FEA7AF229E5844E003B34D6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0FEA7AF129E5844E003B34D6 /* Assets.xcassets */; };
 		0FECC8EE29E36C32008B6AB2 /* CatCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FECC8ED29E36C32008B6AB2 /* CatCardView.swift */; };
@@ -42,6 +48,12 @@
 		0F6FFA132805189400469A3A /* CatsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CatsViewModel.swift; sourceTree = "<group>"; };
 		0F6FFA15280586C200469A3A /* ImageDownloaderClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageDownloaderClient.swift; sourceTree = "<group>"; };
 		0F6FFA182805C1B300469A3A /* Images.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Images.swift; sourceTree = "<group>"; };
+		0FA5E38E29E640D800F3DD47 /* RatingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RatingView.swift; sourceTree = "<group>"; };
+		0FA5E39029E652F000F3DD47 /* SubPropertyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubPropertyView.swift; sourceTree = "<group>"; };
+		0FA5E39229E65B0600F3DD47 /* BridgeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BridgeView.swift; sourceTree = "<group>"; };
+		0FA5E39429E65DB800F3DD47 /* Rating.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Rating.swift; sourceTree = "<group>"; };
+		0FA5E39629E660D400F3DD47 /* Bridge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bridge.swift; sourceTree = "<group>"; };
+		0FA5E39829E661C600F3DD47 /* Info.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Info.swift; sourceTree = "<group>"; };
 		0FEA7AED29E5205B003B34D6 /* APIKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIKey.swift; sourceTree = "<group>"; };
 		0FEA7AF129E5844E003B34D6 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		0FECC8ED29E36C32008B6AB2 /* CatCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CatCardView.swift; sourceTree = "<group>"; };
@@ -120,6 +132,9 @@
 			isa = PBXGroup;
 			children = (
 				0F6FFA092804A21800469A3A /* Cats.swift */,
+				0FA5E39429E65DB800F3DD47 /* Rating.swift */,
+				0FA5E39629E660D400F3DD47 /* Bridge.swift */,
+				0FA5E39829E661C600F3DD47 /* Info.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -148,8 +163,11 @@
 				0F658E08280A3F9D00DB470F /* PlaceHolder.swift */,
 				0F10778729DFA5C100CCBAD8 /* ListView.swift */,
 				0F440DBB29DFE94200745C48 /* SnapCarousel.swift */,
-				0FF5786229E0EFC40083A6C0 /* InfoView.swift */,
 				0FECC8ED29E36C32008B6AB2 /* CatCardView.swift */,
+				0FF5786229E0EFC40083A6C0 /* InfoView.swift */,
+				0FA5E38E29E640D800F3DD47 /* RatingView.swift */,
+				0FA5E39029E652F000F3DD47 /* SubPropertyView.swift */,
+				0FA5E39229E65B0600F3DD47 /* BridgeView.swift */,
 			);
 			path = Helper;
 			sourceTree = "<group>";
@@ -233,11 +251,16 @@
 			buildActionMask = 2147483647;
 			files = (
 				0F6FFA0A2804A21800469A3A /* Cats.swift in Sources */,
+				0FA5E39929E661C600F3DD47 /* Info.swift in Sources */,
 				0FECC8F029E3CCD8008B6AB2 /* LikesView.swift in Sources */,
 				0FF5786129E0D1DB0083A6C0 /* SearchView.swift in Sources */,
+				0FA5E39729E660D400F3DD47 /* Bridge.swift in Sources */,
+				0FA5E38F29E640D800F3DD47 /* RatingView.swift in Sources */,
 				0FF5785F29E0D1640083A6C0 /* DetailView.swift in Sources */,
 				0F6FFA142805189400469A3A /* CatsViewModel.swift in Sources */,
+				0FA5E39529E65DB800F3DD47 /* Rating.swift in Sources */,
 				0FECC8EE29E36C32008B6AB2 /* CatCardView.swift in Sources */,
+				0FA5E39129E652F000F3DD47 /* SubPropertyView.swift in Sources */,
 				0F6FFA192805C1B300469A3A /* Images.swift in Sources */,
 				0F658E0B280A47FA00DB470F /* ContentView.swift in Sources */,
 				0FF5786329E0EFC40083A6C0 /* InfoView.swift in Sources */,
@@ -248,6 +271,7 @@
 				0F10778829DFA5C100CCBAD8 /* ListView.swift in Sources */,
 				0F6FFA16280586C200469A3A /* ImageDownloaderClient.swift in Sources */,
 				0F440DBE29DFE99500745C48 /* Home.swift in Sources */,
+				0FA5E39329E65B0600F3DD47 /* BridgeView.swift in Sources */,
 				0FEA7AEE29E5205B003B34D6 /* APIKey.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

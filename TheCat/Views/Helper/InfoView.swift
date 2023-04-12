@@ -9,27 +9,31 @@ import SwiftUI
 
 struct InfoView: View {
     
-    var title : String
-    var subTitle : String
+    var items : [Info]
     
     var body: some View {
-        VStack(alignment: .leading, spacing: 10) {
-            Text("\(title) :")
-                .font(.title3)
-                .fontWeight(.semibold)
-                .foregroundColor(.black)
-            
-            Text("\(subTitle == "" ? title : subTitle)")
-                .font(.body)
-                .foregroundColor(.gray)
-                .lineLimit(nil)
-            
-            Divider()
-                .padding(.bottom, 20)
-            
-            
+        ForEach(items) { item in
+            if (item.subTitle != "") {
+                VStack(alignment: .leading, spacing: 10) {
+                    Text("\(item.title) :")
+                        .font(.headline)
+                        .fontWeight(.semibold)
+                        .foregroundColor(.black)
+                    
+                    Text("\(item.subTitle)")
+                        .font(.body)
+                        .foregroundColor(.gray)
+                        .lineLimit(nil)
+                    
+                    Divider()
+                        .padding(.bottom, 10)
+                    
+                    
+                }
+                .frame(maxWidth: .infinity, alignment: .leading)
+            }
         }
-        .frame(maxWidth: .infinity, alignment: .leading)
+   
     }
 }
 

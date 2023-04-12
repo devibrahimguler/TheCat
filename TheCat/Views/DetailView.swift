@@ -67,24 +67,58 @@ struct DetailView: View {
                 .padding()
                 .zIndex(1)
                 
-                Images(url: cat.image?.url ?? "", size: CGSize(width: getRect().width - 20, height: 320))
+                Images(url: cat.image?.url ?? "", size: CGSize(width: getRect().width - 60, height: 220))
                     .cornerRadius(20)
-                    .padding(.horizontal, 10)
+                    .padding(.horizontal, 30)
                     .zIndex(0)
+                
+                Divider()
                 
                 VStack(spacing: 0) {
                     
-                    Divider()
-                    
                     VStack(alignment: .leading, spacing: 10) {
+                        InfoView(items: [
+                            Info(title: "Alt Names", subTitle: "\(cat.alt_names ?? "")"),
+                            Info(title: "Description", subTitle: "\(cat.description ?? "")"),
+                            Info(title: "Origin", subTitle: "\(cat.origin ?? "") (\(cat.country_codes ?? ""))"),
+                            Info(title: "Life Span", subTitle: "\(cat.life_span ?? "")"),
+                        ])
                         
-                        InfoView(title: "Description", subTitle: "\(cat.description ?? "")")
-                        InfoView(title: "Origin", subTitle: "\(cat.origin ?? "")")
-                        InfoView(title: "Wikipedia URL", subTitle: "\(cat.wikipedia_url ?? "")")
-                        InfoView(title: "Life Span", subTitle: "\(cat.life_span ?? "")")
-                        InfoView(title: "dog Friendly", subTitle: "\(cat.dog_friendly ?? 0)")
-                     
- 
+                        SubPropertyView(title: "Temperament", subTitle: "\(cat.temperament ?? "")")
+                        
+                        RatingView(items: [
+                            Rating(title: "Indoor", rating: cat.indoor ?? 0),
+                            Rating(title: "lap", rating: cat.lap ?? 0),
+                            Rating(title: "Adaptability", rating: cat.adaptability ?? 0),
+                            Rating(title: "Affection Level", rating: cat.affection_level ?? 0),
+                            Rating(title: "Child Friendly", rating: cat.child_friendly ?? 0),
+                            Rating(title: "Energy Level", rating: cat.energy_level ?? 0),
+                            Rating(title: "grooming", rating: cat.grooming ?? 0),
+                            Rating(title: "Health Issues", rating: cat.health_issues ?? 0),
+                            Rating(title: "Intelligence", rating: cat.intelligence ?? 0),
+                            Rating(title: "Shedding Level", rating: cat.shedding_level ?? 0),
+                            Rating(title: "Social Needs", rating: cat.social_needs ?? 0),
+                            Rating(title: "Stranger Friendly", rating: cat.stranger_friendly ?? 0),
+                            Rating(title: "Vocalisation", rating: cat.vocalisation ?? 0),
+                            Rating(title: "Indoor", rating: cat.indoor ?? 0),
+                            Rating(title: "Experimental", rating: cat.experimental ?? 0),
+                            Rating(title: "Hairless", rating: cat.hairless ?? 0),
+                            Rating(title: "Natural", rating: cat.natural ?? 0),
+                            Rating(title: "Rare", rating: cat.rare ?? 0),
+                            Rating(title: "Rex", rating: cat.rex ?? 0),
+                            Rating(title: "Suppressed Tail", rating: cat.suppressed_tail ?? 0),
+                            Rating(title: "Short Legs", rating: cat.short_legs ?? 0),
+                            Rating(title: "Dog Friendly", rating: cat.dog_friendly ?? 0),
+                            Rating(title: "Hypoallergenic", rating: cat.hypoallergenic ?? 0),
+                        ])
+                        
+                        BridgeView(items: [
+                            Bridge(title: "Go to Wikipedia", url: "\(cat.wikipedia_url ?? "")"),
+                            Bridge(title: "Go to CFA", url: "\(cat.cfa_url ?? "")"),
+                            Bridge(title: "Go to Vetstreet", url: "\(cat.vetstreet_url ?? "")"),
+                            Bridge(title: "Go to Vcahospitals", url: "\(cat.vcahospitals_url ?? "")"),
+                        ])
+                   
                     }
                     .frame(maxWidth: .infinity)
                     .padding(.bottom, 15)
@@ -95,6 +129,11 @@ struct DetailView: View {
                 .padding(.horizontal, 15)
                 .padding(.leading, 30)
                 .padding(viewModel.animateContent ? 1 : 0)
+                .background{
+                    RoundedRectangle(cornerRadius: 20, style: .continuous)
+                        .fill(.blue.opacity(0.1))
+                        .padding(.leading, 30)
+                }
             }
         }
         .offset(y: viewModel.offsetAnimation ? 0 : 300)
