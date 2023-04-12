@@ -129,14 +129,15 @@ struct Home: View {
             
             Text(cat.name!)
                 .font(.title2.bold())
+                .fontWeight(.semibold)
+                .foregroundColor(.black)
                 .lineLimit(1)
-        
-            
-            
+
             Text(cat.description!)
                 .font(getRect().height < 750 ? .caption : .callout)
                 .lineLimit(2)
                 .multilineTextAlignment(.center)
+                .foregroundColor(.gray)
                 .padding(.top,8)
                 .padding(.horizontal)
     
