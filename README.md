@@ -14,5 +14,7 @@ The application opens and retrieves data from an API. The main menu includes an 
 
 <p align="center">
   <img width="234" height="506" src="./Assets/example-image-1.png">
-    <img width="234" height="506" src="./Assets/example-image-1.png">
+  <img width="234" height="506" src="./Assets/example-image-2.png">
+  <img width="234" height="506" src="./Assets/example-image-3.png">
+  <img width="234" height="506" src="./Assets/example-image-4.png">
 </p>
