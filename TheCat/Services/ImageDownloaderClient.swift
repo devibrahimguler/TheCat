@@ -19,6 +19,7 @@ final class ImageDownloaderClient : ObservableObject {
         if let image = self.cache.object(forKey: cat.id! as NSString) {
             DispatchQueue.main.async {
                 self.downloadedImage = Image(uiImage: image)
+                return
             }
         }
         let task = URLSession.shared.dataTask(with: imageUrl) { data, response, error in
