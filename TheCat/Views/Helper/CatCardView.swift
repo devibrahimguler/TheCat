@@ -59,7 +59,7 @@ struct CatCardView: View {
                 ZStack {
                     
                     if !(viewModel.showDetailView && viewModel.selectedCat?.id == cat.id) {
-                        Images(url: cat.image?.url ?? "", size: size, isList: true)
+                        Images(cat: cat, size: size, isList: true)
                     }
                 }
                 .frame(maxWidth: .infinity, maxHeight: .infinity)

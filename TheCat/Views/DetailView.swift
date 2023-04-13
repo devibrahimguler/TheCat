@@ -67,7 +67,7 @@ struct DetailView: View {
                 .padding()
                 .zIndex(1)
                 
-                Images(url: cat.image?.url ?? "", size: CGSize(width: getRect().width - 60, height: 220))
+                Images(cat: cat, size: CGSize(width: getRect().width - 60, height: 220))
                     .cornerRadius(20)
                     .padding(.horizontal, 30)
                     .zIndex(0)

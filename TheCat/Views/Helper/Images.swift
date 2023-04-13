@@ -10,13 +10,13 @@ import SwiftUI
 struct Images: View {
     
     @StateObject var imageDownloaderClient : ImageDownloaderClient = ImageDownloaderClient()
-    var url : String
+    var cat : Cats
     var size : CGSize
     var isList : Bool
   
-    init(url: String, size: CGSize, isList : Bool = false) {
+    init(cat: Cats, size: CGSize, isList : Bool = false) {
 
-        self.url = url
+        self.cat = cat
         self.size = size
         self.isList = isList
     }
@@ -42,15 +42,9 @@ struct Images: View {
             }
         }.onAppear {
             DispatchQueue.main.async {
-                imageDownloaderClient.downloadingImage(url: url)
+                imageDownloaderClient.downloadingImage(cat: cat)
             }
         }
-    }
-}
-
-struct Images_Previews: PreviewProvider {
-    static var previews: some View {
-        Images(url: "https://cdn2.thecatapi.com/images/0XYvRd7oD.jpg", size: CGSize(width: 200, height: 200))
     }
 }
 

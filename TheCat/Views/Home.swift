@@ -22,7 +22,7 @@ struct Home: View {
                 TabView(selection: $currentIndex) {
                     ForEach(viewModel.cats?.indices ?? [Cats]().indices, id: \.self) { index in
                         GeometryReader { proxy in
-                            Images(url: viewModel.cats?[index].image?.url ?? "", size: proxy.size)
+                            Images(cat: (viewModel.cats?[index])!, size: proxy.size)
                         }
                         .ignoresSafeArea()
                         .offset(y: -100)
@@ -117,7 +117,7 @@ struct Home: View {
     func CardView(cat: Cats) -> some View {
         VStack(spacing: 10) {
             GeometryReader {proxy in
-                Images(url: cat.image?.url ?? "", size: proxy.size)
+                Images(cat: cat, size: proxy.size)
                     .cornerRadius(25)
             }
             .padding(15)

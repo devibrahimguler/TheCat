@@ -14,9 +14,9 @@ final class ImageDownloaderClient : ObservableObject {
     
     private let cache = NSCache<NSString, UIImage>()
     
-    func downloadingImage(url: String) {
-        guard let imageUrl = URL(string: url) else { return }
-        if let image = self.cache.object(forKey: "\(url)" as NSString) {
+    func downloadingImage(cat: Cats) {
+        guard let imageUrl = URL(string: cat.image?.url ?? "") else { return }
+        if let image = self.cache.object(forKey: cat.id! as NSString) {
             DispatchQueue.main.async {
                 self.downloadedImage = Image(uiImage: image)
             }
@@ -28,7 +28,7 @@ final class ImageDownloaderClient : ObservableObject {
                     self.downloadedImage = nil
                     return
                 }
-                self.cache.setObject(image, forKey: "\(url)" as NSString)
+                self.cache.setObject(image, forKey: cat.id! as NSString)
                 self.downloadedImage = Image(uiImage: image)
             }
         }
