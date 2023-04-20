@@ -32,13 +32,8 @@ struct Images: View {
                         .carouselModifier(size: size)
                 }
             }else {
-                if isList {
-                    Image("placeholder")
-                        .listModifier(size: size)
-                } else {
-                    Image("placeholder")
-                        .carouselModifier(size: size)
-                }
+                ProgressView()
+                    .frame(maxWidth: .infinity,maxHeight: .infinity)
             }
         }.onAppear {
             DispatchQueue.main.async {
