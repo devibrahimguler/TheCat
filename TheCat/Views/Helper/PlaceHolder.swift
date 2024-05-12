@@ -9,7 +9,6 @@ import SwiftUI
 
 struct PlaceHolder: View {
     
-    @State var isRotate = false
     @State var rotation = 30.0
     
     var body: some View {
